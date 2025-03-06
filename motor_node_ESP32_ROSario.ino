@@ -37,6 +37,7 @@ std_msgs__msg__Float32 msg;  //Defines a message of type float32.
 #define PWM_FRQ 5000 // Define PWM Frequency
 #define PWM_RES 8  // Define PWM Resolution
 #define PWM_CHNL 0    // Define Channel
+
 #define MSG_MIN_VAL -1 // Define min input value
 #define MSG_MAX_VAL 1 // Define max input value
 
@@ -81,7 +82,7 @@ void subscription_callback(const void * msgin)
   }
 
   // Compare the input value to define de spin direction
-  if (pwm_set_point > 0){
+  if (sign > 0){
     if(state){
       for(int i = prev_val; i >= 0; i--){
         ledcWrite(PWM_CHNL, i);
@@ -96,7 +97,7 @@ void subscription_callback(const void * msgin)
     // Right spin
     digitalWrite(In1, LOW);
     digitalWrite(In2, HIGH);
-  }else if (pwm_set_point < 0) {
+  }else if (sign < 0) {
     if(state){
       for(int i = prev_val; i >= 0; i--){
         ledcWrite(PWM_CHNL, i);
